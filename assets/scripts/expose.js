@@ -4,38 +4,24 @@ window.addEventListener('DOMContentLoaded', init);
 
 function init() {
   const hornSelect = document.getElementById('horn-select');
-  const hornImage = document.getElementById('horn-image');
-  const hornSound = document.getElementById('horn-sound');
+  const hornImage = document.querySelector('#expose img');
+  const hornSound = document.querySelector('audio');
   const volumeSlider = document.getElementById('volume');
-  const volumeImage = document.getElementById('volume-image');
-  const playButton = document.getElementById('play-btn');
-
+  const volumeImage = document.querySelector('#volume-controls img');
+  const playButton = document.querySelector('button');
   const jsConfetti = new JSConfetti();
 
   hornSelect.addEventListener('change', () => {
-    const selected = hornSelect.value;
-
-    switch (selected) {
-      case 'air-horn':
-        hornImage.src = 'assets/images/air-horn.svg';
-        hornSound.src = 'assets/audio/air-horn.mp3';
-        break;
-      case 'car-horn':
-        hornImage.src = 'assets/images/car-horn.svg';
-        hornSound.src = 'assets/audio/car-horn.mp3';
-        break;
-      case 'party-horn':
-        hornImage.src = 'assets/images/party-horn.svg';
-        hornSound.src = 'assets/audio/party-horn.mp3';
-        break;
-    }
+    const value = hornSelect.value;
+    hornImage.src = `assets/images/${value}.svg`;
+    hornSound.src = `assets/audio/${value}.mp3`;
   });
 
   volumeSlider.addEventListener('input', () => {
-    const volume = Number(volumeSlider.value);
+    const volume = volumeSlider.value;
     hornSound.volume = volume / 100;
-
-    if (volume === 0) {
+    
+    if (volume == 0) {
       volumeImage.src = 'assets/icons/volume-level-0.svg';
     } else if (volume < 33) {
       volumeImage.src = 'assets/icons/volume-level-1.svg';
