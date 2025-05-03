@@ -11,16 +11,24 @@ function init() {
   const playButton = document.querySelector('button');
   const jsConfetti = new JSConfetti();
 
-  hornSelect.addEventListener('change', () => {
+  // Initialize with default values
+  updateHorn();
+
+  hornSelect.addEventListener('change', updateHorn);
+
+  function updateHorn() {
     const value = hornSelect.value;
     hornImage.src = `assets/images/${value}.svg`;
     hornSound.src = `assets/audio/${value}.mp3`;
+    
+    // Preload the audio
+    hornSound.load();
+    console.log(`Loaded ${value} horn`);
+  }
 
-    console.log("Selected horn:", value);
-    console.log("Audio src set to:", hornSound.src);
-  });
+  volumeSlider.addEventListener('input', updateVolume);
 
-  volumeSlider.addEventListener('input', () => {
+  function updateVolume() {
     const volume = volumeSlider.value;
     hornSound.volume = volume / 100;
 
@@ -33,21 +41,27 @@ function init() {
     } else {
       volumeImage.src = 'assets/icons/volume-level-3.svg';
     }
-
-    console.log("Volume set to:", volume);
-    console.log("Audio volume:", hornSound.volume);
-  });
+  }
 
   playButton.addEventListener('click', () => {
-    if (hornSound.src && hornSound.src !== '') {
-      hornSound.play();
-      console.log("Playing sound:", hornSound.src);
-
-      if (hornSelect.value === 'party-horn') {
-        jsConfetti.addConfetti();
-      }
-    } else {
-      console.log("No horn selected.");
+    // Verify we have a valid sound source
+    if (!hornSound.src || hornSound.src.endsWith('undefined')) {
+      console.warn('No sound selected');
+      return;
     }
+
+    // Play the sound
+    hornSound.play()
+      .then(() => {
+        console.log('Playing sound');
+        if (hornSelect.value === 'party-horn') {
+          jsConfetti.addConfetti();
+        }
+      })
+      .catch(error => {
+        console.error('Playback failed:', error);
+        // Try loading again if playback fails
+        hornSound.load().then(() => hornSound.play());
+      });
   });
 }
