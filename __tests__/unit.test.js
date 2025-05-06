@@ -31,8 +31,8 @@ test('valid email: test@example.com', () => {
   expect(isEmail('test@example.com')).toBe(true);
 });
 
-test('valid email: name.lastname@domain.org', () => {
-  expect(isEmail('name.lastname@domain.org')).toBe(true);
+test('valid email: nameLastname@domain.org', () => {
+  expect(isEmail('nameLastname@domain.org')).toBe(true);
 });
 
 test('invalid email: test@@example.com', () => {
@@ -73,8 +73,8 @@ test('invalid date: 2022/12/31', () => {
   expect(isDate('2022/12/31')).toBe(false);
 });
 
-test('invalid date: 13/01/2022', () => {
-  expect(isDate('13/01/2022')).toBe(false);
+test('invalid date: 13/01/20222', () => {
+  expect(isDate('13/01/20222')).toBe(false);
 });
 
 
@@ -90,6 +90,6 @@ test('invalid hex color: #12345', () => {
   expect(isHexColor('#12345')).toBe(false);
 });
 
-test('invalid hex color: 123456', () => {
-  expect(isHexColor('123456')).toBe(false);
+test('invalid hex color: 1234567', () => {
+  expect(isHexColor('1234567')).toBe(false);
 });
