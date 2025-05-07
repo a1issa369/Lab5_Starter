@@ -1,7 +1,7 @@
 # Lab 5 - Starter
 - Ahmed Issa
 
-## Link to expose.html
+## expose.html
 [expose.html](https://a1issa369.github.io/Lab5_Starter/expose.html)
 
 ## Check Your Understanding
